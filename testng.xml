@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="CignitiReportDemo" parallel="false">
+<parameter name = "browser" value = "firefox" />
+<parameter name = "version" value = "35" />
+<parameter name = "platform" value = "windows" />
+  <test name="CignitiTest1">
+    <classes>
+      <class name="com.cigniti.test.ReportExecutionDemo"/>
+    </classes>
+  </test> <!-- CignitiTest1 -->
+</suite> <!-- CignitiReportDemo -->
