@@ -11,7 +11,8 @@
     <description>
             Generates jar for CignitiReporter as CignitiReporter.jar
     </description>
-	
+	 <property name = "major-version-number" value="1" />
+	 <property name = "src.dir" location = "src" />
 	 <property name = "src.dir" location = "src" />
 	 <property name = "compile.dir" location = "bin" />
 	 <property name = "compile.classes.dir" location = "${compile.dir}/classes"/>
@@ -77,11 +78,13 @@
          ================================= -->
     <target name = "jar" depends = "compile" description = "description">
     	<tstamp/>
-        <jar destfile = "${build.dir}/${ant.project.name}-${DSTAMP}${TSTAMP}.jar" basedir = "${compile.classes.dir}" >        	
+		<buildnumber file="build.number"/>
+		<property name = "version.number" value = "${major-version-number}.${build.number}" />
+        <jar destfile = "${build.dir}/${ant.project.name}-${version.number}.jar" basedir = "${compile.classes.dir}" >        	
         	<exclude name = "com/cigniti/test/**"/>
         	<manifest >
         		<attribute name = "copyright" value = "Cigniti Technologies Limited" />
-				<attribute name = "built date" value = "${TODAY}" />
+				<attribute name = "built date" value = "${TODAY}:${TSTAMP}" />
         	</manifest>
         </jar>   	
     	
