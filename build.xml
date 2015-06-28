@@ -76,11 +76,12 @@
           target: jar              
          ================================= -->
     <target name = "jar" depends = "compile" description = "description">
-    	
-        <jar destfile = "${build.dir}/${ant.project.name}.jar" basedir = "${compile.classes.dir}" >        	
+    	<tstamp/>
+        <jar destfile = "${build.dir}/${ant.project.name}-${DSTAMP}${TSTAMP}.jar" basedir = "${compile.classes.dir}" >        	
         	<exclude name = "com/cigniti/test/**"/>
         	<manifest >
         		<attribute name = "copyright" value = "Cigniti Technologies Limited" />
+				<attribute name = "built date" value = "${TODAY}" />
         	</manifest>
         </jar>   	
     	
