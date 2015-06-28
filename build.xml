@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     28-Jun-2015 8:02:48 am                                                        
+
+     project    
+     description
+                   
+     in01518                                                                
+     ====================================================================== -->
+<project name = "CignitiReporter" default = "jar" basedir = ".">
+    <description>
+            Generates jar for CignitiReporter as CignitiReporter.jar
+    </description>
+	
+	 <property name = "src.dir" location = "src" />
+	 <property name = "compile.dir" location = "bin" />
+	 <property name = "compile.classes.dir" location = "${compile.dir}/classes"/>
+	 <property name = "build.dir" location = "build"/>
+ 	 <property name = "lib.dir" location = "lib" />
+	 <property name = "resource.dir" location = "resources" />
+	 <property name = "logo.dir" location = "logos" />
+	<!--======================================================================
+			 
+			 path set for compilation of sourcecode. 
+			 path points to library in use in source code
+			 
+		  ========================================================================== -->
+		<path id = "compile.classpath">
+			<fileset dir = "${lib.dir}">
+				<include name = "**/*.jar"/>			
+			</fileset>
+		</path>
+		
+		
+		<!--======================================================================
+				 
+				 path set for running test. 
+				 path points to 
+				 #1) library in use in source code
+				 #2) converted class folder from source code
+				 
+		 ========================================================================== -->
+		<path id = "test.classpath">
+			<path refid = "compile.classpath"/>
+			<pathelement location = "${compile.classes.dir}"/>	
+		</path>
+	<!--======================================================================
+			target name="clean" description="cleans the build if exists"
+		 ========================================================================== -->
+	    <target name = "clean" description = "cleans the build if exists">
+	    	<!--delete the dir-->
+	    	<delete failonerror = "false" includeemptydirs = "true">
+				<fileset dir = "${compile.dir}" />  
+	    		<fileset dir = "${build.dir}" />  
+			</delete>
+	    </target>
+		
+	<!--======================================================================
+				target name="init" description=""
+			 ========================================================================== -->
+		    <target name = "init" description = "creates required folders">
+		    	<!--create the dir-->
+		    	<mkdir dir = "${compile.classes.dir}" />
+		    	<mkdir dir = "${build.dir}"/>		    	
+		    </target>
+		<!--======================================================================
+				target name="compile" description=""
+		========================================================================== -->
+		
+		<target name = "compile" depends = "clean,init" description="compile all the groovy classes from src">
+		    
+			<javac srcdir = "${src.dir}" destdir = "${compile.classes.dir}" classpathref = "compile.classpath" />		    
+			
+		</target>
+    <!-- ================================= 
+          target: jar              
+         ================================= -->
+    <target name = "jar" depends = "compile" description = "description">
+    	
+        <jar destfile = "${build.dir}/${ant.project.name}.jar" basedir = "${compile.classes.dir}" >        	
+        	<exclude name = "com/cigniti/test/**"/>
+        	<manifest >
+        		<attribute name = "copyright" value = "Cigniti Technologies Limited" />
+        	</manifest>
+        </jar>   	
+    	
+    	<copy todir="${build.dir}/resources">
+    		<fileset dir = "${resource.dir}" />    		
+    	</copy>
+    	<copy todir="${build.dir}/logos">
+    	    <fileset dir = "${logo.dir}" />    		
+    	</copy>
+    </target>
+
+    
+</project>
